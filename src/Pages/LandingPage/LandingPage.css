@@ -1,0 +1,90 @@
+.CardMain {
+  max-width: 500px;
+  background-color: white;
+  margin: 15px auto;
+  padding: 10px;
+  width: 88%;
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+}
+.flexy {
+  display: flex;
+  justify-content: space-between;
+}
+.Selections {
+  margin-top: 20px;
+  /* padding: 5px; */
+}
+.Selections button {
+  margin: 3px;
+  width: 100%;
+}
+
+.btns {
+  /* max-width: 300px; */
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+}
+.valueInputComp {
+  margin-top: 10px;
+  /* max-width: 300px; */
+  margin-left: auto;
+  margin-right: auto;
+}
+.custom-input-number input {
+  text-align: center;
+}
+
+.rs-input-number-btn-group-vertical {
+  display: none;
+}
+.SubmitBtn button {
+  margin-top: 10px;
+  width: 100%;
+  /* max-width: 300px; */
+  background-color: red;
+  color: white;
+  padding: 10px;
+  transition: all 0.75s;
+}
+
+.SubmitBtn button:disabled {
+  background-color: rgb(119, 119, 119);
+}
+.SubmitBtn button:active {
+  background-color: rgb(255, 0, 0);
+}
+
+.SubmitBtn button:hover {
+  background-color: rgb(255, 15, 15);
+  color: white;
+}
+.TableOrderHistory {
+  width: 100%;
+  margin-top: 10px;
+}
+table {
+  color: black;
+}
+th,
+td {
+  /* border: 1px solid rgb(185, 185, 185); */
+  border-collapse: collapse;
+}
+th {
+  padding: 5px;
+}
+tr:nth-child(even) {
+  background-color: Lightgreen;
+}
+tr:nth-child(odd) {
+  background-color: rgb(235, 255, 235);
+}
+.betID {
+  padding-left: 15px;
+  text-align: left;
+}
+.ans {
+  width: 70px;
+}
