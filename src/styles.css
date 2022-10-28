@@ -7,3 +7,14 @@ body {
   margin: 0%;
   background-color: blanchedalmond;
 }
+
+
+.rs-drawer-body {
+  padding: 0px!important;
+}
+
+.rs-nav-item{
+  width: 100%;
+  padding: 15px 30px;
+  font-size: larger;
+}

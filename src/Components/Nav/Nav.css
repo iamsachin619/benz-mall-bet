@@ -5,7 +5,8 @@
   padding: 5px 13px;
   background-color: red;
   color: #fff;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+  padding:10px;
+  /* box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2); */
 }
 .nav-links a {
   color: #fff;
@@ -74,8 +75,15 @@ input[type="checkbox"] {
   font-size: 24px;
   user-select: none;
 }
+
+.toggleBtn{
+  display: none;
+}
 /* APPLYING MEDIA QUERIES */
 @media (max-width: 768px) {
+  .toggleBtn{
+    display: block;
+  }
   .menu {
     display: none;
     position: absolute;
