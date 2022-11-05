@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import {
   Panel,
   Paragraph,
@@ -129,6 +130,9 @@ export default function Register({setUser}) {
                 Register
               </Button>
             </div>
+            <p className='pt-3'>
+                    Already have an account? <Link to="/Login">Login here!</Link>
+                </p>
           </div>
         </div>
       </Panel>

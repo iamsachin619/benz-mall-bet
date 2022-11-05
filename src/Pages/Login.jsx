@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 import {
   Panel,
   Paragraph,
@@ -101,6 +102,9 @@ useEffect(()=>{
                     Login
                   </Button>
                 </div>
+                <p className='pt-3'>
+                    Don't have an account? <Link to="/Register">Register here!</Link>
+                </p>
               </div>
             </div>
           </Panel>
