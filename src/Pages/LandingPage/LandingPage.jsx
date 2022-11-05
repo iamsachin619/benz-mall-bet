@@ -233,7 +233,7 @@ export default function LandingPage({user, setUser}) {
         setTimeout(()=>{
           GetActiveBet()
           GetOrderHistory()
-        },500)
+        },1000)
       }
     },[timer])
   return (
