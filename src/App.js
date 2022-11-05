@@ -16,11 +16,11 @@ export default function App() {
   const [user, setUser] = useState(false)
   return (
     <div className="App">
-      <NavBar user={user}/>
+      <NavBar user={user} setUser={setUser}/>
       <Routes>
-        <Route path="/" element={user?<LandingPage />:<Login/>} />
-        <Route path="/Login" element={<Login/>} />
-        <Route path="/Register" element={<Register/>} />
+        <Route path="/" element={user?<LandingPage user={user} setUser={setUser}/>:<Login  setUser={setUser}/>} />
+        <Route path="/Login" element={<Login setUser={setUser}/>} />
+        <Route path="/Register" element={<Register setUser={setUser}/>} />
       </Routes>
     </div>
   );

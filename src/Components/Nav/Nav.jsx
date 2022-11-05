@@ -1,78 +1,91 @@
-
 import "./Nav.css";
-import { Drawer,Nav } from "rsuite";
-import React ,{ useState }from 'react'
+import { Drawer, Nav, useToaster } from "rsuite";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import { apiHost } from "../../env";
 
-
-export default function NavBar({user}) {
-  const [navOpen, setNav] = useState(false)
-  const navigation = useNavigate()
-
+export default function NavBar({ user, setUser }) {
+  const [navOpen, setNav] = useState(false);
+  const navigation = useNavigate();
+  const toaster = useToaster();
   let navOptions = {
-    user:[
-      {lable:'Orders', link:'/orders'}
+    user: [{ lable: "Orders", link: "/orders" }],
+    noUser: [
+      { lable: "Login", link: "/Login" },
+      { lable: "Register", link: "/Register" },
     ],
-    noUser:[
-      {lable:'Login', link:'/Login'},
-      {lable:'Register', link:'/Register'},
+  };
 
+  const messageErr = (
+    <Notification type={"info"} header={"Signed Out!"}></Notification>
+  );
 
-    ]
-  }
+  const SignOut = () => {
+    fetch(apiHost + "/user/signOut")
+      .then((res) => {
+        toaster.push(messageErr, { placement: "bottomEnd" });
+      })
+      .catch((err) => console.log({ errSignOut: err }));
+  };
   return (
     <div>
       <nav class="navbar">
         <div class="logo">Benz Mall</div>
-        
+
         <nav class="">
-        
-        <ul class="nav-links">
-          {/* <input type="checkbox" id="checkbox_toggle" /> */}
-          {/* <label for="checkbox_toggle" class="hamburger">
+          <ul class="nav-links">
+            {/* <input type="checkbox" id="checkbox_toggle" /> */}
+            {/* <label for="checkbox_toggle" class="hamburger">
             &#9776;
           </label> */}
-          <div class="menu">
-            {user && navOptions.user.map((menuItem)=>{
-              return(
-                <li>
-                <Link to={menuItem.link}>{menuItem.lable}</Link>
-              </li>
-              )
-            })}
-            
-            {!user && navOptions.noUser.map((menuItem)=>{
-              return(
-                <li>
-                <Link to={menuItem.link}>{menuItem.lable}</Link>
-              </li>
-              )
-            })}
-            {user && 
-            <li>
-               <a href='/signout'>Signout</a>
-              </li>}
-          </div>
-        </ul>
-      
+            <div class="menu">
+              {user &&
+                navOptions.user.map((menuItem) => {
+                  return (
+                    <li>
+                      <Link to={menuItem.link}>{menuItem.lable}</Link>
+                    </li>
+                  );
+                })}
+
+              {!user &&
+                navOptions.noUser.map((menuItem) => {
+                  return (
+                    <li>
+                      <Link to={menuItem.link}>{menuItem.lable}</Link>
+                    </li>
+                  );
+                })}
+              {user && (
+                <li
+                  onClick={() => {
+                    setUser(null);
+                    SignOut();
+                  }}
+                >
+                  <a>Signout</a>
+                </li>
+              )}
+            </div>
+          </ul>
         </nav>
         <div className="toggleBtn">
-        <input
-          type="checkbox"
-          id="checkbox_toggle"
-          onClick={() => {
-            console.log('rer')
-            setNav(true)}}
-        />
-        <label for="checkbox_toggle" class="hamburger">
-          &#9776;
-        </label>
+          <input
+            type="checkbox"
+            id="checkbox_toggle"
+            onClick={() => {
+              console.log("rer");
+              setNav(true);
+            }}
+          />
+          <label for="checkbox_toggle" class="hamburger">
+            &#9776;
+          </label>
         </div>
 
         <Drawer
-          size='full'
-          
+          size="full"
           backdrop={true}
           open={navOpen}
           placement="right"
@@ -88,40 +101,52 @@ export default function NavBar({user}) {
         </Drawer.Actions> */}
           </Drawer.Header>
           <Drawer.Body>
-            <Nav activeKey="1">
+            <Nav>
+              {user &&
+                navOptions.user.map((menuItem) => {
+                  return (
+                    <Nav.Item
+                      onClick={() => {
+                        setNav(false)
+                        navigation(menuItem.link);
+                      }}
+                    >
+                      {menuItem.lable}
+                    </Nav.Item>
+                  );
+                })}
+
+              {!user &&
+                navOptions.noUser.map((menuItem) => {
+                  return (
+                    <Nav.Item
+                      onClick={() => {
+                        setNav(false)
+                        navigation(menuItem.link);
+                      }}
+                    >
+                      {menuItem.lable}
+                    </Nav.Item>
+                  );
+                })}
+              {user && (
+                <Nav.Item
+                  onClick={() => {
+                    setNav(false)
+                    setUser(null);
+                    SignOut();
+                    toaster.push(messageErr, { placement: "bottomEnd" });
+                  }}
+                >
+                  Logout
+                </Nav.Item>
+              )}
+
               
-              {user && navOptions.user.map((menuItem)=>{
-              return(
-                <Nav.Item onClick={()=>{
-                  navigation(menuItem.link)
-                }}>
-                
-                
-                  {menuItem.lable}
-                
-              </Nav.Item>
-              
-              )
-            })}
-            
-            {!user && navOptions.noUser.map((menuItem)=>{
-              return(
-                <Nav.Item onClick={()=>{
-                  navigation(menuItem.link)
-                }}>
-               {menuItem.lable}
-              </Nav.Item>
-              )
-            })}
             </Nav>
-
-
           </Drawer.Body>
         </Drawer>
       </nav>
     </div>
   );
 }
-
-
-
