@@ -13,6 +13,8 @@ import {
   Notification
 } from "rsuite";
 import { apiHost } from '../env';
+import Loader from 'rsuite/Loader';
+
 
 export default function Login({setUser}) {
   const toaster = useToaster();
@@ -23,6 +25,7 @@ export default function Login({setUser}) {
   
 
   const [err, setErr] = useState(null)
+  const [load, setLoad] = useState(false)
 useEffect(()=>{
     if(err){
       toaster.push(messageErr, { placement: "bottomEnd",duration:0 });
@@ -35,6 +38,7 @@ useEffect(()=>{
   );
 
   const Login = () =>{
+    setLoad(true)
     if (!email) {setErr({msg:'Please enter email', type:'error'}); return;}
     if(!pass) {setErr({msg:'Please enter password', type:'error'}); return;}
 
@@ -46,14 +50,15 @@ useEffect(()=>{
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: JSON.stringify({
-        email,
+        email:email.toLowerCase(),
         pass
       })
     })
     .then(async res => {
+      setLoad(false)
       console.log({res})
       if(res.status == 200){
-        setErr({msg:'Loggedin successfully',type:'success'})
+        setErr({msg:'Login successfully',type:'success'})
         //setUser
         let data = await res.json()
         console.log({data})
@@ -66,6 +71,7 @@ useEffect(()=>{
       }
     })
     .catch((err)=>{
+      setLoad(false)
       console.log({err})
     })
   }
@@ -99,7 +105,7 @@ useEffect(()=>{
                     color="red"
                     onClick={Login}
                   >
-                    Login
+                    {load?<Loader/>:"Login"}
                   </Button>
                 </div>
                 <p className='pt-3'>

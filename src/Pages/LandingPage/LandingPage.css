@@ -19,7 +19,10 @@
   margin: 3px;
   width: 100%;
 }
-
+.rs-badge {
+  
+  width: 100%;
+}
 .btns {
   /* max-width: 300px; */
   margin-top: 5px;

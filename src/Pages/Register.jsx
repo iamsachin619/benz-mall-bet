@@ -16,6 +16,7 @@ import {
   Placeholder,
 } from "rsuite";
 import { apiHost } from "../env";
+import Loader from 'rsuite/Loader';
 
 export default function Register({setUser}) {
   const toaster = useToaster();
@@ -26,6 +27,7 @@ export default function Register({setUser}) {
   const [Cpass, setCpass] = useState("");
 
   const [err, setErr] = useState(null)
+  const [load, setLoad] = useState(false)
   useEffect(()=>{
     if(err){
       toaster.push(messageErr, { placement: "bottomEnd",duration:0 });
@@ -40,6 +42,7 @@ export default function Register({setUser}) {
   );
 
   const Register = () => {
+    setLoad(true)
     if (!email) {setErr({msg:'Please enter email', type:'error'}); return;}
     if(!pass) {setErr({msg:'Please enter password', type:'error'}); return;}
     if(!Cpass) {setErr({msg:'Please confirm password', type:'error'}); return;}
@@ -53,12 +56,13 @@ export default function Register({setUser}) {
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: JSON.stringify({
-        email,
+        email:email.toLowerCase(),
         pass
       })
     })
     .then(async res => {
       console.log({res})
+      setLoad(false)
       if(res.status == 200){
         setErr({msg:'Registered successfully',type:'success'})
         //setUser
@@ -72,6 +76,7 @@ export default function Register({setUser}) {
       }
     })
     .catch((err)=>{
+      setLoad(false)
       console.log({err})
     })
     
@@ -122,12 +127,12 @@ export default function Register({setUser}) {
             <div className="SubmitBtn">
               <Button
                 appearance="primary"
-                color="red"
+                color="orange"
                 onClick={() => {
                   Register();
                 }}
               >
-                Register
+                {load?<Loader/>:'Register'}
               </Button>
             </div>
             <p className='pt-3'>

@@ -10,7 +10,8 @@ import {
   Badge,
   useToaster,
   Loader,
-  Notification
+  Notification,
+
 } from "rsuite";
 import { useState } from "react";
 import { apiHost } from "../../env";
@@ -22,6 +23,8 @@ export default function LandingPage({user, setUser}) {
 
   const [selectedBtn, setSelectedBtn ] = useState(null)
   const [betValue, setBetValue] = useState(10)
+
+  const [load, setLoad] = useState(false)
 
   function handleBtnSelection(e) {
     // console.log(e.target.innerHTML.split("<")[0]);
@@ -61,6 +64,7 @@ export default function LandingPage({user, setUser}) {
   },[])
 
   const PlaceOrder = () =>{
+    setLoad(true)
     fetch(apiHost + '/user/placeOrder',{
       method:'post',
       credentials:'include',
@@ -75,6 +79,7 @@ export default function LandingPage({user, setUser}) {
       })
     })
     .then(async res => {
+      setLoad(false)
       if(res.status == 200){
         let data = await res.json()
         console.log({data})
@@ -94,7 +99,9 @@ export default function LandingPage({user, setUser}) {
         setErr({type:'error', msg:data.message})
       }
     })
-    .catch(err => console.log('err placing order'))
+    .catch(err => {
+      setLoad(false)
+      console.log('err placing order')})
   }
 
   const GetWalletUpdated = () => {
@@ -149,7 +156,7 @@ export default function LandingPage({user, setUser}) {
   const Ref = useRef(null);
   
     // The state for our timer
-    const [timer, setTimer] = useState('00:00:00');
+    const [timer, setTimer] = useState('00:00');
   
   
     const getTimeRemaining = (e) => {
@@ -185,7 +192,7 @@ export default function LandingPage({user, setUser}) {
         // If you adjust it you should also need to
         // adjust the Endtime formula we are about
         // to code next    
-        setTimer('02:00');
+        // setTimer('02:00');
   
         // If you try to remove this line the 
         // updating of timer Variable will be
@@ -227,7 +234,7 @@ export default function LandingPage({user, setUser}) {
     }
 
     useEffect(()=>{
-      console.log({timer})
+      // console.log({timer})
       if(timer == '00:00'){
 
         setTimeout(()=>{
@@ -312,30 +319,39 @@ export default function LandingPage({user, setUser}) {
                   {/* {for Violet BTn} */}
                   {selectedBtn !== null ? (
                     selectedBtn === "Violet" ? (
+                      <Badge content="x 3">
+
                       <Button
                         onClick={handleBtnSelection}
                         color="violet"
                         appearance="primary"
-                      >
+                        >
                         Violet
                       </Button>
+                      </Badge>
                     ) : (
+                      <Badge content="x 3">
+
                       <Button
                         onClick={handleBtnSelection}
                         color="violet"
                         appearance="ghost"
-                      >
+                        >
                         Violet
                       </Button>
+                        </Badge>
                     )
                   ) : (
+                    <Badge content='x 3'>
+
                     <Button
                       onClick={handleBtnSelection}
                       color="violet"
                       appearance="primary"
-                    >
+                      >
                       Violet
                     </Button>
+                      </Badge>
                   )}
                 </div>
               </div>
@@ -362,7 +378,7 @@ export default function LandingPage({user, setUser}) {
                   disabled={selectedBtn === null ? true : false}
                   onClick={PlaceOrder}
                 >
-                  Place Order!
+                  {load?<Loader/>:"Place Order!"}
                 </Button>
               </div>
             </div>
