@@ -31,7 +31,23 @@ export default function NavBar({ user, setUser }) {
   return (
     <div>
       <nav class="navbar">
-        <div class="logo">Benz Mall</div>
+        <div class="logo">
+          
+          <Link
+            to="/"
+            style={{
+              textDecoration: "none",
+              color: "white",
+            }}
+          >
+            <img
+            src="icon-trans.png"
+            width="50"
+            style={{ marginRight: "10px" }}
+          ></img>
+            <p style={{ fontWeight: "bold", display: "inline" }}>Benz Mall</p>
+          </Link>
+        </div>
 
         <nav class="">
           <ul class="nav-links">
@@ -64,7 +80,7 @@ export default function NavBar({ user, setUser }) {
                     SignOut();
                   }}
                 >
-                  <a>Signout</a>
+                  <a style={{cursor:'pointer'}}>Signout</a>
                 </li>
               )}
             </div>
@@ -107,7 +123,7 @@ export default function NavBar({ user, setUser }) {
                   return (
                     <Nav.Item
                       onClick={() => {
-                        setNav(false)
+                        setNav(false);
                         navigation(menuItem.link);
                       }}
                     >
@@ -121,7 +137,7 @@ export default function NavBar({ user, setUser }) {
                   return (
                     <Nav.Item
                       onClick={() => {
-                        setNav(false)
+                        setNav(false);
                         navigation(menuItem.link);
                       }}
                     >
@@ -132,7 +148,7 @@ export default function NavBar({ user, setUser }) {
               {user && (
                 <Nav.Item
                   onClick={() => {
-                    setNav(false)
+                    setNav(false);
                     setUser(null);
                     SignOut();
                     toaster.push(messageErr, { placement: "bottomEnd" });
@@ -141,8 +157,6 @@ export default function NavBar({ user, setUser }) {
                   Logout
                 </Nav.Item>
               )}
-
-              
             </Nav>
           </Drawer.Body>
         </Drawer>
